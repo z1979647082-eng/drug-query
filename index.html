@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#0f5257">
+  <title>实验室危化品查询</title>
+  <meta name="description" content="基于三份本地 PDF 名录的离线实验室危化品查询工具">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">跳到查询结果</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-mark" aria-hidden="true">危</div>
+      <div>
+        <p class="eyebrow">离线名录检索 · 数据版本 2026-08-28</p>
+        <h1>实验室危化品查询</h1>
+        <p class="subtitle">法规分类与实验室存放区域分开显示，结果可追溯到原 PDF 页码。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="search-panel" aria-labelledby="search-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">快速查询</p>
+          <h2 id="search-title">输入中文名称、别名、英文名或 CAS 号</h2>
+        </div>
+        <span class="data-count" id="data-count">正在载入本地数据…</span>
+      </div>
+
+      <div class="search-row">
+        <label class="search-field" for="search-input">
+          <span class="visually-hidden">药品名称或 CAS 号</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+          <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="例如：高锰酸钾、灰锰氧、7722-64-7" aria-describedby="search-help" aria-controls="results">
+        </label>
+        <button class="button button-secondary" id="clear-button" type="button">清除搜索</button>
+      </div>
+      <p id="search-help" class="helper-text">匹配顺序：CAS 精确 → 中文标准名精确 → 别名精确 → 英文名精确 → 候选项。候选项不会自动判定分类。</p>
+
+      <div class="controls-row">
+        <fieldset class="filter-group">
+          <legend>分类筛选</legend>
+          <div class="filter-scroll" id="category-filters">
+            <button class="filter-chip active" type="button" data-filter="全部" aria-pressed="true">全部</button>
+            <button class="filter-chip" type="button" data-filter="易制爆" aria-pressed="false">易制爆</button>
+            <button class="filter-chip" type="button" data-filter="易制毒" aria-pressed="false">易制毒</button>
+            <button class="filter-chip" type="button" data-filter="易燃" aria-pressed="false">易燃</button>
+            <button class="filter-chip" type="button" data-filter="其他危险化学品" aria-pressed="false">其他危化品</button>
+            <button class="filter-chip" type="button" data-filter="普通药品" aria-pressed="false">普通药品</button>
+          </div>
+        </fieldset>
+
+        <label class="sort-control" for="sort-select">
+          <span>排序</span>
+          <select id="sort-select">
+            <option value="name">按药品名称</option>
+            <option value="cas">按 CAS 号</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section id="status-banner" class="status-banner" hidden aria-live="polite"></section>
+
+    <section class="results-section" id="results" aria-labelledby="results-title" hidden>
+      <div class="results-heading">
+        <div>
+          <p class="section-kicker">查询结果</p>
+          <h2 id="results-title">名录记录</h2>
+        </div>
+        <span id="result-count" class="result-count" aria-live="polite"></span>
+      </div>
+      <div id="candidate-list" class="candidate-list" hidden></div>
+      <div id="result-grid" class="result-grid"></div>
+      <button id="load-more" class="button button-more" type="button" hidden>显示更多</button>
+    </section>
+
+    <aside class="notice-card" aria-label="安全提示">
+      <div class="notice-icon" aria-hidden="true">i</div>
+      <div>
+        <h2>使用边界</h2>
+        <p>法规分类依据当前三份名录，实际存放区域依据308实验室位置规则。未匹配到实验室位置的药品显示“待确认”，使用和存放前仍应核对SDS及实验室管理要求。未列入当前三份名录不代表绝对安全。</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <p>本地离线工具 · 不连接在线数据库 · 数据文件与查询代码分开保存</p>
+  </footer>
+
+  <noscript><p class="noscript">此查询工具需要浏览器启用 JavaScript。</p></noscript>
+  <script src="data/chemicals.js" defer></script>
+  <script src="data/storage-map.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
