@@ -5,10 +5,10 @@
 })(typeof window !== "undefined" ? window : globalThis, function () {
   "use strict";
 
-  const allowedAreas = new Set(["普1", "普2", "普3", "普4", "普5", "冰6", "危7", "危8", "危9", "危10", "危11"]);
+  const allowedAreas = new Set(["普1", "普2", "普3", "普4", "普5", "危6", "危7", "危8", "危9", "危10", "冰11"]);
   const legacyAreas = new Map([
-    ["冰箱", "冰6"], ["易制毒", "危7"], ["易燃", "危8"], ["易燃和普通危化品", "危8"],
-    ["腐蚀品", "危9"], ["酸性危化品", "危10"], ["毒害品", "危11"]
+    ["易制毒", "危6"], ["易燃", "危7"], ["易燃和普通危化品", "危7"],
+    ["腐蚀品", "危8"], ["酸性危化品", "危9"], ["毒害品", "危10"], ["冰箱", "冰11"]
   ]);
 
   function normalizeName(value) {
@@ -78,11 +78,11 @@
     const primary = String((record && record.primaryCategory) || "");
     const tags = new Set((record && record.categoryTags) || []);
     if (primary === "易制爆危化品") return "待确认";
-    if (primary === "易制毒危化品") return "危7";
-    if (primary === "易燃危化品") return "危8";
-    if (tags.has("毒害") || tags.has("剧毒")) return "危11";
-    if (tags.has("酸性腐蚀品") || tags.has("酸性危化品")) return "危10";
-    if (tags.has("腐蚀") || tags.has("腐蚀性") || tags.has("腐蚀品")) return "危9";
+    if (primary === "易制毒危化品") return "危6";
+    if (primary === "易燃危化品") return "危7";
+    if (tags.has("毒害") || tags.has("剧毒")) return "危10";
+    if (tags.has("酸性腐蚀品") || tags.has("酸性危化品")) return "危9";
+    if (tags.has("腐蚀") || tags.has("腐蚀性") || tags.has("腐蚀品")) return "危8";
     return "待确认";
   }
 
